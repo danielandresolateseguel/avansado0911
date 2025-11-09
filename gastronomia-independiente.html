@@ -13,16 +13,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="preload" as="image" href="Imagenes/lomo%20a%20lo%20pobre.webp">
     <link rel="preload" as="image" href="Imagenes/hambuerguesagour.jpg">
-    <script>
-      // Captura temprana de errores de imágenes para asegurar fallback
-      window.addEventListener('error', function(e) {
-        var t = e.target;
-        if (t && t.tagName === 'IMG' && t.src && !t.src.includes('asus-proart-p16.png')) {
-          t.src = 'Imagenes/asus-proart-p16.png';
-          t.alt = 'Imagen no disponible';
-        }
-      }, true);
-    </script>
+    
 </head>
 <body class="sector-gastronomia" data-category="gastronomia" data-vendor="gastronomia" data-slug="gastronomia-independiente" data-page="gastronomia" data-theme="independiente">
     <header>
@@ -364,7 +355,7 @@
                 </div>
                 <div class="product-card searchable-item" id="plato4" data-food-category="bebidas">
                     <div class="product-image">
-                        <img src="Imagenes/ensaladacesar.webp" alt="Limonada Casera" width="800" height="600" loading="lazy">
+                        <img src="Imagenes/Limonadacasera.jpg" alt="Limonada Casera" width="800" height="600" loading="lazy">
                     </div>
                     <div class="product-info">
                         <h3>Limonada Casera</h3>
@@ -384,7 +375,7 @@
                 <div class="product-card searchable-item" id="interest-product-2x1">
                     <div class="interest-badge">2x1</div>
                     <div class="product-image">
-                        <img src="Imagenes/PIZZA%20MARGARITA.webp" alt="Pizza Margarita 2x1" width="800" height="600" loading="lazy">
+                        <img src="Imagenes/PIZZAMARGARITA.webp" alt="Pizza Margarita 2x1" width="800" height="600" loading="lazy">
                     </div>
                     <div class="product-info">
                         <h3>Pizza Margarita 2x1</h3>
@@ -483,7 +474,7 @@
     </footer>
     
     <!-- Modal de producto (compatible con scrip.js) -->
-    <div id="product-modal" style="display: none;" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="modal-product-title" aria-describedby="modal-product-description" tabindex="-1">
+    <div id="product-modal" class="product-modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="modal-product-title" aria-describedby="modal-product-description" tabindex="-1">
       <div class="modal-content">
         <button class="close-modal" aria-label="Cerrar modal" title="Cerrar"><i class="fas fa-times" aria-hidden="true"></i></button>
         <div class="modal-body">
@@ -498,7 +489,7 @@
             <button id="modal-add-to-cart-btn" class="add-to-cart-btn">Añadir al carrito</button>
           </div>
         </div>
-    </div>
+      </div>
     </div>
 
     <!-- Botón flotante para volver al inicio -->

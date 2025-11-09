@@ -1623,47 +1623,44 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.style.overflow = 'hidden';
     }
     
-    // Agregar event listeners a las imágenes de productos
-    const productCards = document.querySelectorAll('.product-card');
-    
-    productCards.forEach((card) => {
-        card.style.cursor = 'pointer';
-        
-        // Evento click simple para todos los dispositivos
-        card.addEventListener('click', function(e) {
-            // Evitar que se active si se hace click en el botón de añadir al carrito
-            if (e.target.classList.contains('add-to-cart-btn')) {
-                return;
-            }
-            
-            // Obtener información del producto de forma segura
-            const productCard = this;
-            const addToCartBtn = productCard.querySelector('.add-to-cart-btn');
-            if (!addToCartBtn) {
-                console.debug('Tarjeta sin botón add-to-cart, se omite modal');
-                return;
-            }
-            const productId = addToCartBtn.getAttribute('data-id') || '';
-            const productName = addToCartBtn.getAttribute('data-name') || '';
-            const productPrice = addToCartBtn.getAttribute('data-price') || '0';
-            const descEl = productCard.querySelector('.product-description');
-            const productDescription = descEl ? descEl.textContent : '';
-            const imgEl = productCard.querySelector('.product-image img');
-            const productImageSrc = imgEl ? imgEl.src : '';
-            
-            // Crear objeto con datos del producto
-            const productData = {
-                id: productId,
-                name: productName,
-                price: productPrice,
-                description: productDescription,
-                imageSrc: productImageSrc
-            };
-            
-            // Mostrar modal
-            showModal(productData);
+    // Vincular eventos de clic a las tarjetas de producto (incluye contenido dinámico)
+    function bindProductCardClicks(root = document) {
+        const cards = root.querySelectorAll ? root.querySelectorAll('.product-card') : [];
+        cards.forEach((card) => {
+            // Evitar duplicar listeners
+            if (card.dataset.modalBound === 'true') return;
+            card.dataset.modalBound = 'true';
+            card.style.cursor = 'pointer';
+            card.addEventListener('click', function(e) {
+                if (e.target.classList.contains('add-to-cart-btn')) {
+                    return;
+                }
+                const productCard = this;
+                const addToCartBtn = productCard.querySelector('.add-to-cart-btn');
+                if (!addToCartBtn) {
+                    console.debug('Tarjeta sin botón add-to-cart, se omite modal');
+                    return;
+                }
+                const productId = addToCartBtn.getAttribute('data-id') || '';
+                const productName = addToCartBtn.getAttribute('data-name') || '';
+                const productPrice = addToCartBtn.getAttribute('data-price') || '0';
+                const descEl = productCard.querySelector('.product-description');
+                const productDescription = descEl ? descEl.textContent : '';
+                const imgEl = productCard.querySelector('.product-image img');
+                const productImageSrc = imgEl ? imgEl.src : '';
+                const productData = {
+                    id: productId,
+                    name: productName,
+                    price: productPrice,
+                    description: productDescription,
+                    imageSrc: productImageSrc
+                };
+                showModal(productData);
+            });
         });
-    });
+    }
+    // Inicial: vincular en documento completo
+    bindProductCardClicks(document);
 
     // Cerrar modal
     function closeProductModal() {
@@ -2859,14 +2856,32 @@ document.addEventListener('DOMContentLoaded', function() {
         function renderCatalogFromBusinessConfig() {
             const cfg = window.BusinessConfig;
             const grid = document.querySelector('#menu-gastronomia .products-grid');
-            if (!cfg || !cfg.catalog || !Array.isArray(cfg.catalog) || !grid) return;
+            if (!cfg || !Array.isArray(cfg.catalog) || !grid) return;
 
-            const parts = cfg.catalog.map((p, idx) => {
+            // No sobreescribir el HTML estático si el catálogo está vacío
+            const catalog = cfg.catalog.filter(p => p && typeof p === 'object');
+            if (catalog.length === 0) {
+                console.info('BusinessConfig: catálogo vacío, se mantiene el menú estático');
+                return;
+            }
+
+            // Si ningún producto tiene imagen definida, mantener contenido estático
+            const anyImagePresent = catalog.some(p => (p.imageSrc || p.image || '').trim() !== '');
+            if (!anyImagePresent) {
+                console.info('BusinessConfig: productos sin imagen, se mantiene el menú estático');
+                return;
+            }
+
+            const parts = catalog.map((p, idx) => {
                 const id = p.id || `prod-${idx+1}`;
                 const cats = (p.categories || []).join(', ');
                 const price = parseInt(p.price);
                 const priceText = isFinite(price) ? `$${price.toLocaleString('es-AR')} ARS` : (p.priceText || '');
-                const imgSrc = p.imageSrc || '';
+                // Soportar claves imageSrc o image, y normalizar espacios
+                const rawImg = p.imageSrc || p.image || '';
+                const normalizedImg = rawImg ? rawImg.replace(/\s/g, '%20') : '';
+                // Si no hay imagen, usar una segura para evitar espacios en blanco
+                const imgSrc = normalizedImg || 'Imagenes/asus-proart-p16.png';
                 const imgAlt = p.imageAlt || p.name || '';
                 const desc = p.description || '';
                 const name = p.name || `Producto ${idx+1}`;
@@ -2884,7 +2899,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>`;
             });
 
-            grid.innerHTML = parts.join('\n');
+            // Evitar limpiar si no hay productos renderizados
+            const html = parts.join('\n');
+            if (!html.trim()) {
+                console.info('BusinessConfig: sin productos válidos, se mantiene el menú estático');
+                return;
+            }
+
+            grid.innerHTML = html;
             // Refrescar buscables y botones
             refreshSearchableItems();
             bindAddToCartEvents(grid);
@@ -2961,6 +2983,15 @@ document.addEventListener('DOMContentLoaded', function() {
         function renderGastronomyFromBusinessConfig() {
             renderCatalogFromBusinessConfig();
             renderFiltersFromBusinessConfig();
+            // Re-inicializar loaders para imágenes recién renderizadas
+            try {
+                if (window.__reinitMediaLoaders) window.__reinitMediaLoaders(document.getElementById('menu-gastronomia'));
+                if (window.__reinitImageLoader) window.__reinitImageLoader(document.getElementById('menu-gastronomia'));
+                // Re-vincular clics del modal para nuevas tarjetas
+                bindProductCardClicks(document.getElementById('menu-gastronomia'));
+            } catch (e) {
+                // silencioso
+            }
         }
 
         // Render al estar lista la BusinessConfig
