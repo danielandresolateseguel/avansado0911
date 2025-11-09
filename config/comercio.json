@@ -1,0 +1,40 @@
+{
+  "meta": {
+    "slug": "comercio",
+    "category": "comercio",
+    "page": "comercio",
+    "branding": {
+      "name": "Comercio Demo",
+      "primaryColor": "#1e88e5"
+    }
+  },
+  "checkout": {
+    "mode": "whatsapp",
+    "whatsappNumber": "+5492615893590",
+    "messageTemplate": "Hola! Me gustaría realizar el siguiente pedido:"
+  },
+  "filters": {
+    "categories": ["Destacados", "Liquidaciones", "Más vendidos", "Nuevo"],
+    "synonyms": {
+      "tv": ["televisor"],
+      "celular": ["smartphone", "móvil"],
+      "auriculares": ["audífonos", "headphones"]
+    }
+  },
+  "catalog": [
+    {
+      "id": "demo-001",
+      "name": "Producto Demo 1",
+      "price": 29999,
+      "imageSrc": "Imagenes/producto1.webp.avif",
+      "tags": ["Destacados"]
+    },
+    {
+      "id": "demo-002",
+      "name": "Producto Demo 2",
+      "price": 45999,
+      "imageSrc": "Imagenes/producto2.webp",
+      "tags": ["Más vendidos"]
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+/* Estilos específicos para comercio: scoped al atributo data-page */
+body[data-page="comercio"] .section-title {
+  color: #4a6fa5;
+}
+
+/* Ajuste sutil de márgenes en comercio */
+body[data-page="comercio"] .section-header-inline .section-title {
+  margin: 0 12px 0 0;
+}
+
+/* Botones de categoría del menú inline en comercio */
+body[data-page="comercio"] .category-filter-toggle {
+  border-color: #c9d4e7;
+}
