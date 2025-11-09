@@ -11,8 +11,18 @@
     <link rel="stylesheet" href="gastronomia.css">
     <link rel="stylesheet" href="gastronomia-independiente.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="preload" as="image" href="Imagenes/lomo a lo pobre.webp">
+    <link rel="preload" as="image" href="Imagenes/lomo%20a%20lo%20pobre.webp">
     <link rel="preload" as="image" href="Imagenes/hambuerguesagour.jpg">
+    <script>
+      // Captura temprana de errores de imágenes para asegurar fallback
+      window.addEventListener('error', function(e) {
+        var t = e.target;
+        if (t && t.tagName === 'IMG' && t.src && !t.src.includes('asus-proart-p16.png')) {
+          t.src = 'Imagenes/asus-proart-p16.png';
+          t.alt = 'Imagen no disponible';
+        }
+      }, true);
+    </script>
 </head>
 <body class="sector-gastronomia" data-category="gastronomia" data-vendor="gastronomia" data-slug="gastronomia-independiente" data-page="gastronomia" data-theme="independiente">
     <header>
@@ -88,7 +98,7 @@
             <div class="carousel-container">
                 <div class="carousel-slides">
                     <div class="carousel-slide active">
-                        <img src="Imagenes/lomo a lo pobre.webp" alt="Sabor auténtico" width="1600" height="900">
+                        <img src="Imagenes/lomo%20a%20lo%20pobre.webp" alt="Sabor auténtico" width="1600" height="900">
                         <div class="carousel-content">
                             <h2>Sabor auténtico</h2>
                             <p>Platos preparados con ingredientes frescos y seleccionados</p>
@@ -180,7 +190,7 @@
 
                         <div class="product-card discount-card searchable-item" id="destacado3">
                             <div class="product-image">
-                                <img src="Imagenes/ensalada cesar.webp" alt="Ensalada César" width="800" height="600" loading="lazy" fetchpriority="high" decoding="async">
+                                <img src="Imagenes/ensaladacesar.webp" alt="Ensalada César" width="800" height="600" loading="lazy" fetchpriority="high" decoding="async">
                             </div>
                             <div class="product-info">
                                 <h3>Ensalada César</h3>
@@ -194,7 +204,7 @@
 
                         <div class="product-card discount-card searchable-item" id="destacado4">
                             <div class="product-image">
-                                <img src="Imagenes/raviolioles de ricota.jpg" alt="Ravioles de ricota" width="800" height="600" loading="lazy">
+                                <img src="Imagenes/raviolioles%20de%20ricota.jpg" alt="Ravioles de ricota" width="800" height="600" loading="lazy">
                             </div>
                             <div class="product-info">
                                 <h3>Ravioles de ricota</h3>
@@ -321,7 +331,7 @@
             <div class="products-grid">
                 <div class="product-card searchable-item" id="plato1" data-food-category="pizzas, comen-dos">
                     <div class="product-image">
-                        <img src="Imagenes/PIZZA MARGARITA.webp" alt="Pizza Margarita" width="800" height="600" loading="lazy">
+                        <img src="Imagenes/PIZZAMARGARITA.webp" alt="Pizza Margarita" width="800" height="600" loading="lazy">
                     </div>
                     <div class="product-info">
                         <h3>Pizza Margarita</h3>
@@ -343,7 +353,7 @@
                 </div>
                 <div class="product-card searchable-item" id="plato3" data-food-category="ensaladas">
                     <div class="product-image">
-                        <img src="Imagenes/ensalada cesar.webp" alt="Ensalada César" width="800" height="600" loading="lazy" fetchpriority="high" decoding="async">
+                        <img src="Imagenes/ensaladacesar.webp" alt="Ensalada César" width="800" height="600" loading="lazy" fetchpriority="high" decoding="async">
                     </div>
                     <div class="product-info">
                         <h3>Ensalada César</h3>
@@ -354,7 +364,7 @@
                 </div>
                 <div class="product-card searchable-item" id="plato4" data-food-category="bebidas">
                     <div class="product-image">
-                        <img src="Imagenes/Limonada-casera.jpg" alt="Limonada Casera" width="800" height="600" loading="lazy">
+                        <img src="Imagenes/ensaladacesar.webp" alt="Limonada Casera" width="800" height="600" loading="lazy">
                     </div>
                     <div class="product-info">
                         <h3>Limonada Casera</h3>
@@ -374,7 +384,7 @@
                 <div class="product-card searchable-item" id="interest-product-2x1">
                     <div class="interest-badge">2x1</div>
                     <div class="product-image">
-                        <img src="Imagenes/PIZZA MARGARITA.webp" alt="Pizza Margarita 2x1" width="800" height="600" loading="lazy">
+                        <img src="Imagenes/PIZZA%20MARGARITA.webp" alt="Pizza Margarita 2x1" width="800" height="600" loading="lazy">
                     </div>
                     <div class="product-info">
                         <h3>Pizza Margarita 2x1</h3>
@@ -402,7 +412,7 @@
                 <div class="product-card searchable-item" id="interest-product-destacados">
                     <div class="interest-badge">Especialidad</div>
                     <div class="product-image">
-                        <img src="Imagenes/lomo a lo pobre.webp" alt="Lomo a lo Pobre (Especialidad)" width="800" height="600" loading="lazy">
+                        <img src="Imagenes/lomo%20a%20lo%20pobre.webp" alt="Lomo a lo Pobre (Especialidad)" width="800" height="600" loading="lazy">
                     </div>
                     <div class="product-info">
                         <h3>Lomo a lo Pobre (Especialidad)</h3>
